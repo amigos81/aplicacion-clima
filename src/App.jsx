@@ -41,6 +41,22 @@ function App() {
       }).finally(() => {
         setIsLoading(false)
       })
+    }else{
+      const url=`https://api.openweathermap.org/data/2.5/weather?q=peru&appid=${APIkey}`
+      axios.get(url).then(res => {
+        const obj = {
+          celsius: (res.data.main.temp - 273.15).toFixed(2),
+          fahrenheit: ((res.data.main.temp - 273.15) * (9 / 5) + 32).toFixed(2)
+        }
+        setTemp(obj)
+        setHasError(false)
+        setWeather(res.data)
+      }).catch(err => {
+        setHasError(true)
+        console.log(err)
+      }).finally(() => {
+        setIsLoading(false)
+      })
     }
   }, [coords])
 
